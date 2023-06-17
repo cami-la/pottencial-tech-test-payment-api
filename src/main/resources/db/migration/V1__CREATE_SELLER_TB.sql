@@ -19,3 +19,5 @@ ALTER TABLE seller
 
 ALTER TABLE seller
     ADD CONSTRAINT uc_seller_phonenumber UNIQUE (phone_number);
+
+INSERT INTO seller (id, cpf, name, email, phone_number) VALUES (1, '12345678901', 'Camila Cavalcante', 'camila@example.com', '123456789');
