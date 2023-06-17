@@ -1,24 +1,25 @@
 package dev.cami.pottencial.techtest.model;
 
 import dev.cami.pottencial.techtest.enummeration.Status;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
 @Builder
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class Order {
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
   @OneToOne
   private Seller seller;
-  private Instant date;
+  private LocalDate date;
   @OneToMany
   private List<Item> itens;
   @Enumerated
