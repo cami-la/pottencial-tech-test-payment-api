@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
 public record OrderService(
   OrderRepository orderRepository
 ) implements IOrderService {
-  private static final String INVALID_TRANSITION_MESSAGE = "Invalid status transition.";
+  public static final String INVALID_TRANSITION_MESSAGE = "Invalid status transition.";
   @Override
   public Order create(Seller seller, List<Item> itens) {
     Order order = Order.builder()
@@ -40,6 +40,18 @@ public record OrderService(
     int newStatus = calculateNewStatus(currentStatus, status);
     order.setStatus(Status.values()[newStatus]);
     return orderRepository.save(order);
+  }
+
+  public int calculateNewStatus(int currentStatus, int status) {
+    return switch (currentStatus) {
+      case 0 -> // Aguardando pagamento
+          calculateNewStatusForAwaitingPayment(status);
+      case 1 -> // Pagamento Aprovado
+          calculateNewStatusForPaymentApproved(status);
+      case 2 -> // Enviado para Transportadora
+          calculateNewStatusForSentToCarrier(status);
+      default -> throw new IllegalArgumentException(INVALID_TRANSITION_MESSAGE);
+    };
   }
 
   private int calculateNewStatusForAwaitingPayment(int status) {
@@ -68,17 +80,5 @@ public record OrderService(
     } else {
       throw new IllegalArgumentException(INVALID_TRANSITION_MESSAGE);
     }
-  }
-
-  private int calculateNewStatus(int currentStatus, int status) {
-    return switch (currentStatus) {
-      case 0 -> // Aguardando pagamento
-          calculateNewStatusForAwaitingPayment(status);
-      case 1 -> // Pagamento Aprovado
-          calculateNewStatusForPaymentApproved(status);
-      case 2 -> // Enviado para Transportadora
-          calculateNewStatusForSentToCarrier(status);
-      default -> throw new IllegalArgumentException(INVALID_TRANSITION_MESSAGE);
-    };
   }
 }
