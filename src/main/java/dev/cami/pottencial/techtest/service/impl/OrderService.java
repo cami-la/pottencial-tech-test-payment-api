@@ -1,7 +1,6 @@
 package dev.cami.pottencial.techtest.service.impl;
 
 import dev.cami.pottencial.techtest.enummeration.Status;
-import dev.cami.pottencial.techtest.model.Item;
 import dev.cami.pottencial.techtest.model.Order;
 import dev.cami.pottencial.techtest.model.Seller;
 import dev.cami.pottencial.techtest.repository.OrderRepository;
@@ -9,7 +8,6 @@ import dev.cami.pottencial.techtest.service.IOrderService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -18,11 +16,10 @@ public record OrderService(
 ) implements IOrderService {
   public static final String INVALID_TRANSITION_MESSAGE = "Invalid status transition.";
   @Override
-  public Order create(Seller seller, List<Item> itens) {
+  public Order create(Seller seller) {
     Order order = Order.builder()
         .seller(seller)
         .date(LocalDate.now())
-        .itens(itens)
         .status(Status.AWAITING_PAYMENT)
         .build();
     return orderRepository.save(order);

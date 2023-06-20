@@ -20,7 +20,7 @@ public class Order {
   @OneToOne
   private Seller seller;
   private LocalDate date;
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
   private List<Item> itens;
   @Enumerated
   private Status status;

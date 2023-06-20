@@ -16,4 +16,6 @@ public class Item {
   @OneToOne
   private Product product;
   private int quantity;
+  @ManyToOne
+  private Order order;
 }
