@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @AllArgsConstructor
 @Builder
@@ -15,13 +14,12 @@ import java.util.List;
 @NoArgsConstructor
 public class Order {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @OneToOne
+  @ManyToOne
+  @JoinColumn(name = "seller_id")
   private Seller seller;
   private LocalDate date;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
-  private List<Item> itens;
-  @Enumerated
+  @Enumerated(EnumType.ORDINAL)
   private Status status;
 }

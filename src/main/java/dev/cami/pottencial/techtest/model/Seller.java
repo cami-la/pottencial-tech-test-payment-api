@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 public class Seller {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @Column(unique = true)
   private String cpf;

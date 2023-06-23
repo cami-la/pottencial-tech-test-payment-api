@@ -11,11 +11,13 @@ import lombok.*;
 @NoArgsConstructor
 public class Item {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @OneToOne
+  @ManyToOne
+  @JoinColumn(name = "order_id")
+  private Order order;
+  @ManyToOne
+  @JoinColumn(name = "product_id")
   private Product product;
   private int quantity;
-  @ManyToOne
-  private Order order;
 }

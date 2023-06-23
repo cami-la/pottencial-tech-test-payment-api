@@ -1,7 +1,6 @@
 package dev.cami.pottencial.techtest.service;
 
 import dev.cami.pottencial.techtest.enummeration.Status;
-import dev.cami.pottencial.techtest.model.Item;
 import dev.cami.pottencial.techtest.model.Order;
 import dev.cami.pottencial.techtest.model.Seller;
 import dev.cami.pottencial.techtest.repository.OrderRepository;
@@ -19,7 +18,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -34,14 +32,13 @@ public class OrderServiceTest {
   void shouldCreateOrder() {
     //given
     Seller sellerFake = new Seller();
-    List<Item> itensFake = List.of(new Item());
     Order orderFake = builderOrder();
     orderFake.setSeller(sellerFake);
     //when
     Mockito.when(orderRepository.save(ArgumentMatchers.any(Order.class)))
         .thenReturn(orderFake);
     //then
-    Order actual = orderService.create(sellerFake, itensFake);
+    Order actual = orderService.create(sellerFake);
     Assertions.assertThat(actual).isSameAs(orderFake);
   }
 
